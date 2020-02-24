@@ -6,6 +6,8 @@ class fileTree:
         self.trunk = branch(path, 0)
         self.minName = self.trunk.nameVal
         self.maxName = self.trunk.nameVal
+        self.minModTime = self.trunk.modTime
+        self.maxModTime = self.trunk.modTime
         self._buildtree(self.trunk)
         self.trunk.sizeRatio = 1.0
 
@@ -17,6 +19,10 @@ class fileTree:
                 self.minName = b.nameVal
             if b.nameVal > self.maxName:
                 self.maxName = b.nameVal
+            if b.modTime < self.minModTime:
+                self.minModTime = b.modTime
+            if b.modTime > self.maxModTime:
+                self.maxModTime = b.modTime
             if not b.isFile:
                 self._buildtree(b)
             branchSize += b.size
@@ -34,6 +40,7 @@ class branch:
         self.isFile = os.path.isfile(self.path)
         self.level = level
         self.nameVal = 0.0
+        self.modTime = os.path.getmtime(self.path)
         self.sizeRatio = 1
         try:
             for n in range(len(self.name)):
@@ -42,7 +49,7 @@ class branch:
             pass
 
         if self.isFile:
-            self.size = os.stat(path).st_size
+            self.size = os.stat(self.path).st_size
         else:
             self.size = 0
         self.branches = []
@@ -83,7 +90,8 @@ def printTree(outputFile, tree):
         for b in range(a.level):
             toprint += "\t"
         nameRatio = (a.nameVal-tree.minName)/(tree.maxName-tree.minName)
-        toprint += ','.join([a.name, str(format(a.size,'.0f')), str(format(a.sizeRatio, '.30f')), str(format(nameRatio, '.30f')), a.path])
+        datetimeRatio = (a.modTime-tree.minModTime)/(tree.maxModTime-tree.minModTime)
+        toprint += ','.join([a.name, str(format(a.size,'.0f')), str(format(a.sizeRatio, '.30f')), str(format(nameRatio, '.30f')), str(format(datetimeRatio, '.30f')), a.path])
         f.write(toprint + "\n")
     f.close()
     print("Branches: " + str(branches))
