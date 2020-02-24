@@ -22,7 +22,6 @@ There was very little testing done.
 
 '''
 
-from graphics_modified import *
 import sys
 from file_loader import fileTree, printTree
 
