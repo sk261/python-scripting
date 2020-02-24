@@ -83,7 +83,7 @@ def printTree(outputFile, tree):
         for b in range(a.level):
             toprint += "\t"
         nameRatio = (a.nameVal-tree.minName)/(tree.maxName-tree.minName)
-        toprint += ','.join([a.name, str(a.size), str(a.sizeRatio), str(nameRatio), a.path])
+        toprint += ','.join([a.name, str(format(a.size, '.30f')), str(format(a.sizeRatio, '.30f')), str(format(nameRatio, '.30f')), a.path])
         f.write(toprint + "\n")
     f.close()
     print("Branches: " + str(branches))
