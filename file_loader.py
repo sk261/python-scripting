@@ -91,7 +91,7 @@ def printTree(outputFile, tree):
             toprint += "\t"
         nameRatio = (a.nameVal-tree.minName)/(tree.maxName-tree.minName)
         datetimeRatio = (a.modTime-tree.minModTime)/(tree.maxModTime-tree.minModTime)
-        toprint += ','.join([a.name, str(format(a.size,'.0f')), str(format(a.sizeRatio, '.30f')), str(format(nameRatio, '.30f')), str(format(datetimeRatio, '.30f')), a.path])
+        toprint += ','.join([a.name, str(format(a.size,'.0f')), str(format(a.sizeRatio, '.30f')), str(format(nameRatio, '.30f')), str(format(datetimeRatio, '.30f')), a.path, str(int(a.isFile))])
         f.write(toprint + "\n")
     f.close()
     print("Branches: " + str(branches))

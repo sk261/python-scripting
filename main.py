@@ -11,7 +11,7 @@ python -m venv venv
 Output as text document, indented by level, with the following information as csv:
     Branch Name, Branch Size (in bytes), Branch Size Ratio relative to parent (0.0 to 1.0),
         Branch Name Ratio relative to whole tree (0.0 to 1.0), Modified Time Ratio relative to whole tree (0.0 to 1.0),
-        Branch Full Path
+        Branch Full Path, IsFile (1 or 0)
 
 How to run:
 
