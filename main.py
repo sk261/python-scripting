@@ -23,6 +23,7 @@ There was very little testing done.
 '''
 
 import sys
+import os
 from file_loader import fileTree, printTree
 
 def makeTree(path, output):

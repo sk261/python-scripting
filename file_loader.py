@@ -1,6 +1,5 @@
 import os
 
-
 class fileTree:
     def __init__(self, path):
         self.trunk = branch(path, 0)
@@ -13,20 +12,23 @@ class fileTree:
 
     def _buildtree(self, br):
         branchSize = 0
-        for p in os.listdir(br.path):
-            b = branch(os.path.join(br.path, p), br.level + 1)
-            if b.nameVal < self.minName:
-                self.minName = b.nameVal
-            if b.nameVal > self.maxName:
-                self.maxName = b.nameVal
-            if b.modTime < self.minModTime:
-                self.minModTime = b.modTime
-            if b.modTime > self.maxModTime:
-                self.maxModTime = b.modTime
-            if not b.isFile:
-                self._buildtree(b)
-            branchSize += b.size
-            br.branches.append(b)
+        try:
+            for p in os.listdir(br.path):
+                b = branch(os.path.join(br.path, p), br.level + 1)
+                if b.nameVal < self.minName:
+                    self.minName = b.nameVal
+                if b.nameVal > self.maxName:
+                    self.maxName = b.nameVal
+                if b.modTime < self.minModTime:
+                    self.minModTime = b.modTime
+                if b.modTime > self.maxModTime:
+                    self.maxModTime = b.modTime
+                if not b.isFile:
+                    self._buildtree(b)
+                branchSize += b.size
+                br.branches.append(b)
+        except:
+            print("Unable to access: " + br.path);
         br.size = branchSize
         if br.size > 0:
             for p in br.branches:
